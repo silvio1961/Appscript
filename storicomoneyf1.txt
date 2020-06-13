@@ -1,0 +1,106 @@
+function Daytrading() {  
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+ 
+  var NumRG=ss.getRangeByName("NumRG").getValue();
+   var ok=ss.getRangeByName("OKG").getValue();
+  
+   Logger.log("OK1="+ok); 
+  if(ok==1) {
+  sheetOp=ss.getActiveSheet();
+  Logger.log("OK1111d="+ok);
+  sheet = ss.getSheetByName("Guiornaliero"); //Store
+  var NumRG=ss.getRangeByName("NumRG").getValue();
+  sorg=ss.getRangeByName("DeposGior");
+    var dest=sheetOp.getRange(NumRG,1,1,4);
+  ss.getSheetByName("Giornaliero").getRange(NumRG,1,1,4).setValues(sorg.getValues());
+  
+  }
+ 
+ 
+   
+}
+
+
+
+
+
+
+function RegistraTutto() {  
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var UltQ=ss.getRangeByName("UltQuot").getValue();
+  var Gseg=ss.getRangeByName("DataSeg").getValue();
+  var ok=ss.getRangeByName("OK").getValue();
+   Logger.log("OK="+ok); 
+  if(ok==1) {
+  sheetOp=ss.getActiveSheet();
+  Logger.log("OK1111d="+ok);
+  sheet = ss.getSheetByName("Storico"); //Store
+  var NumR=ss.getRangeByName("NumRighe").getValue();
+  sorg=ss.getRangeByName("Deposito");
+  //  var dest=sheetOp.getRange(NumR,1,1,4);
+  ss.getSheetByName("Storico").getRange(NumR,1,1,5).setValues(sorg.getValues());
+  
+  }
+  Logger.log("mese "+ss.getRangeByName("ms").getValue()+"anno="+ss.getRangeByName("as").getValue()+" giorno="+ss.getRangeByName("gs").getValue());
+  var d = new Date(ss.getRangeByName("as").getValue(), ss.getRangeByName("ms").getValue()-1, ss.getRangeByName("gs").getValue());
+  Logger.log("d="+d);
+  var g=d.getDay();
+   var a=d.getYear();
+  var m=d.getMonth();  
+  Logger.log("Giorno="+g+"Mese="+m+"anno="+a);
+if(Gseg<UltQ)   
+          ss.getRangeByName("DataRif").setValue(d)
+  else    ss.getRangeByName("DataRif").setValue(ss.getRangeByName("UltQuot").getValue());
+   
+ 
+   
+}
+
+
+function Deviazione() {  
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+   Logger.log("OK="+ss.getRangeByName("OK").getValue()); 
+  if(ss.getRangeByName("OK").getValue()==1) {
+  sheetOp=ss.getActiveSheet();
+  
+  sheet = ss.getSheetByName("Storico"); //Store
+  var NumR=ss.getRangeByName("righedev").getValue();
+    var deviazione=ss.getRangeByName("deviazione").getValue();
+     Logger.log("NumR="+deviazione);
+  ss.getSheetByName("Storico").getRange(NumR,18,1,1).setValue(deviazione);
+  
+ // ss.getSheetByName("Storico").getRange(NumR,17,1,1).setValue(ss.getRangeByName("deviazione").getValue());
+      Logger.log("NumR="+NumR);
+  }
+  ss.getRangeByName("DataRif").setValue(ss.getRangeByName("DataSeg").getValue());
+  while(ss.getRangeByName("OK").getValue()==0) {
+    ss.getRangeByName("DataRif").setValue(ss.getRangeByName("DataSeg").getValue());
+  }  
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function dollprec_celle() {
+  var OutP = new Array(4);
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+var sheet1 = ss.getSheetByName("Dollaro"); //Get values
+  var source=sheet1.getRange("A1:A2").getValues();
+  NumR=source[0];
+  Doll=source[1];
+   Logger.log("sour="+source+" NumR="+NumR+"  Doll"+Doll);
+  sheet1.getRange("A3").setValue(Doll);
+  var ora=new Date();
+  sheet1.getRange("A4").setValue(ora);
+
+
+ sheet1.getRange("b"+NumR).setValue(ora);
+
+ sheet1.getRange("C"+NumR).setValue(Doll);
+
+
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
