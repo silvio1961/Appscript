@@ -1,0 +1,249 @@
+function dollprec_celle() {
+  var OutP = new Array(4);
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+var sheet1 = ss.getSheetByName("Dollaro"); //Get values
+  var source=sheet1.getRange("A1:A2").getValues();
+  NumR=source[0];
+  Doll=source[1];
+   Logger.log("sour="+source+" NumR="+NumR+"  Doll"+Doll);
+ // sheet1.getRange("A3").setValue(Doll);
+  var ora=new Date();
+  sheet1.getRange("C1").setValue(ora);
+
+
+ sheet1.getRange("b"+NumR).setValue(ora);
+
+ sheet1.getRange("C"+NumR).setValue(Doll);
+
+
+
+}
+
+
+
+function Aggiorna1() {
+ var ss=SpreadsheetApp.getActiveSpreadsheet()
+  shdep=ss.getSheetByName("Aggiorna");
+  
+  var agg=ss.getRangeByName("Salva").getValue(); 
+    var numerotit=ss.getRangeByName("numerotit").getValue(); 
+   var InizioRiga=ss.getRangeByName("Numrighe1").getValue(); 
+
+
+    if(agg>0) {
+         shquot=ss.getSheetByName("Quot1");
+        numrig=shquot.getRange("A1").getValue();
+      Logger.log("numrig="+numrig);
+       valori=ss.getRangeByName("depositoagg").getValues();
+           //  valori=shdep.getRange(InizioRiga,1,numerotit,3).getValues();
+      Logger.log("valori="+valori[1]);
+ 
+        shquot.getRange(InizioRiga,1,1,33).setValues(valori);
+    
+    }  
+  }
+
+function getData1() {
+ var ss=SpreadsheetApp.getActiveSpreadsheet()
+  sheet=ss.getSheetByName("quotrealtime");
+  var form= new Array(40);
+    var queryString = Math.random(); 
+  SourceIndir=ss.getRangeByName("inddatistor").getValues();
+  var numtit=ss.getRangeByName("Numerotitoli").getValue();
+   Logger.log("numtit="+numtit);
+  for( i=0;i<=numtit;i++) {
+   
+   form[i]='=INDEX(IMPORTHTML("'+SourceIndir[i]+'";"table";0);';                        
+  }  
+   
+   agg='3;2)';
+
+
+ for(i=0;i<=numtit+2;i++) {
+ //  sheet.getRange(i+2,11,1,1).setValue(form[i]+agg)
+   Logger.log("i="+i+" "+form[i]+agg);
+   for(j=2;j<6;j++) {
+      sheet.getRange(i+2,j+5,1,1).setValue(form[i]+'2;'+j+')');
+ 
+    }  
+      
+  
+  } 
+ 
+  for(i=2;i<=numtit+2;i++) {
+    
+    valori=sheet.getRange(i,7,1,4).getValues();
+    Logger.log("i= "+i+" valori="+valori);
+ 
+    ceck=sheet.getRange(i,7).getValue();
+     Logger.log("ceck= "+ceck);
+   
+    if(ceck>0) sheet.getRange(i,2,1,4).setValues(valori);
+  }  
+sheet.getRange('G2:J50').clear();
+
+}
+
+
+
+function getData() {
+ var ss=SpreadsheetApp.getActiveSpreadsheet()
+  sheet=ss.getSheetByName("quotrealtime");
+  var form= new Array(40);
+    var queryString = Math.random(); 
+   form[0]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-usd-corporate-bond-historical-data?cid=46937";"table";0);';
+   agg='3;2)';
+
+  form[1]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-iboxx-$-hyld-cap.-bond-historical-data?cid=949370";"table";0);';
+  form[5]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-jpm-em-bond-eur-hedged-historical-data?cid=980292";"table";0);';
+  form[3]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-eur-corporate-bond-historical-data?cid=47075";"table";0);';
+  form[4]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-markit-iboxx-eur-high-yld-historical-data?cid=46916";"table";0);';
+  form[2]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-jp-usd-emerging-mkts-bond-historical-data?cid=46910";"table";0);';
+//  form[6]='=INDEX(IMPORTHTML("https://it.investing.com/funds/bond-high-yield-class-unit-r-eur-ac-historical-data";"table";0);';
+ // form[9]='=RIGHT(INDEX(IMPORTHTML("http://www.morningstar.it/it/funds/snapshot/snapshot.aspx?id=F0GBR04V6B";"table";11);2;3);8);';
+    form[7]='=INDEX(IMPORTHTML("https://it.investing.com/rates-bonds/btp-1nv23-9-historical-data";"table";0);'
+    form[8]='=INDEX(IMPORTHTML("https://it.investing.com/rates-bonds/btp-tf-1,65-mz32-eur-historical-data";"table";0);';
+  form[6]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-msci-emerging-market-historical-data?cid=37582";"table";0);';
+   form[9]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-fallen-angels-hy-corp-bnd-historical-data?cid=1130945";"table";0);';
+ 
+   form[10]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/lyxor-world-water-historical-data?cid=47030";"table";0);';
+  form[11]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-automation-robotics-acc-historical-data";"table";0);';
+ form[12]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/lyxor-green-bond-dr-c-eur-historical-data?cid=1141631";"table";0);';
+  form[13]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-ftse-nareit-dev.-markets-historical-data?cid=46927";"table";0);';
+   form[14]='=INDEX(IMPORTHTML("https://it.investing.com/currencies/eur-usd-historical-data";"table";0);';
+    form[15]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-usd-short-duration-high-yie-historical-data?cid=959562";"table";0);';
+     form[16]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-dj-asia-pacific-div.-30-historical-data?cid=47261";"table";0);';
+   form[17]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-dj-euro-stoxx-50-uk-historical-data?cid=47258";"table";0);';
+  form[18]='=INDEX(IMPORTHTML("https://it.investing.com/etfs/ishares-s-p-500---gbp-historical-data?cid=949524";"table";0);';
+
+  for(i=0;i<20;i++) {
+    sheet.getRange(i+2,11,1,1).setValue(form[i]+agg)
+    Logger.log("fog="+form[i]+agg);
+    for(j=2;j<6;j++) {
+      sheet.getRange(i+2,j+5,1,1).setValue(form[i]+'2;'+j+')');
+ 
+    }  
+      
+  
+  } 
+ 
+  for(i=2;i<22;i++) {
+    
+    valori=sheet.getRange(i,7,1,5).getValues();
+    Logger.log("i=" +i+ " valori="+valori);
+ 
+    ceck=sheet.getRange(i,7).getValue();
+   
+    if(ceck>0) sheet.getRange(i,2,1,5).setValues(valori);
+  }  
+sheet.getRange('G2:q21').clear();
+
+}
+
+
+
+function formatta() {
+ 
+ var ss = SpreadsheetApp.getActiveSpreadsheet();
+ ss.getSheetByName("depos").getRange(1, 1, 800, 7).clear();
+ 
+};
+
+
+
+
+function aggiornaQuot(){
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+shdep=ss.getActiveSheet();
+  Source=ss.getRangeByName("deposito").getValues();
+ Logger.log("ss="+Source);
+  Titolo=Source[0][0];
+  NumR=Source[0][1];
+  Logger.log("ss="+Titolo+"NumR= "+NumR);
+   var shquot=ss.getSheetByName(Titolo);
+
+  NumRDest=shquot.getRange("H1").getValue();
+     Logger.log("ss="+shquot.getSheetName()+"NumRDest="+NumRDest);
+  valori=shdep.getRange(7,23,NumR,3).getValues();
+  shquot.getRange(NumRDest,1, NumR,3).setValues(valori);
+  
+   
+
+}
+
+
+
+function AggDati()
+{
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet1 = ss.getSheetByName("Foglio40");
+    
+  source=sheet1.getRange("R3:R5").getValues();
+  var Data=new Date(source[1]);
+  
+ // Data=source[1];
+  Logger.log("Data="+Data);
+  var GSett=Data.getDay();
+  Logger.log("GSett="+GSett);
+  
+  if((GSett!=1) || (GSett!=7)) {
+    
+   var resto=source[0];
+    
+    resto++;
+    if(resto==4) resto=0;
+ //   Data.setDate(Data.getDate()+1);
+    if(resto==0) sheet1.getRange("R4").setValue(source[2]);
+    sheet1.getRange("R3").setValue(resto);
+  }
+  else  sheet1.getRange("R4").setValue(source[2]);
+} 
+
+
+function deposito() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+var i=3;
+ 
+  for(k=0;k<6;k++) {
+   // j=k+6;
+    var shdep=ss.getSheets()[k];
+    var shquot=ss.getSheets()[k+6];
+ 
+  var esci=1; 
+  g1=ss.getSheets()[k+6].getRange("A5").getValue();
+  m1=ss.getSheets()[k+6].getRange("B5").getValue();
+  a1=ss.getSheets()[k+6].getRange("C5").getValue();
+ 
+   i=3;
+  while(esci) {
+ 
+    g2=ss.getSheets()[k].getRange("A"+i).getValue();
+    m2=ss.getSheets()[k].getRange("B"+i).getValue();
+    a2=ss.getSheets()[k].getRange("C"+i).getValue();
+  
+        Logger.log("g1="+g1);
+  Logger.log("m1="+m1);
+    Logger.log("a1="+a1);     
+  Logger.log("g2="+g2);
+  Logger.log("m2="+m2);
+        
+       Logger.log("a2="+a2);
+   var ng1=g1+40*m1+400*(a1-2017);
+     var ng2=g2+40*m2+400*(a2-2017);
+        Logger.log("ng1="+ng1+" ng2="+ng2); 
+    if(ng1<ng2) i++;
+    else esci=0;
+    Logger.log(" i="+i); 
+  }  
+  j=i-3;
+  if(j>0) {
+     Logger.log("j="+j);
+   shquot.insertRowsAfter(4, j);
+    rangdest=shquot.getRange(3,1,j+2,19);
+    shdep.getRange(1,1,j+2,19).copyTo(rangdest);
+  }  
+  
+} 
+}
+  
